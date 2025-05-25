@@ -1,23 +1,32 @@
+// PrestamoLibro.java
 package org.example.proyectofx.model;
 
 public class PrestamoLibro {
-    private String fechaPrestamo, fechaDevolucion;
-    private static Libro libro;
+    private String idTransaccion;
+    private String fechaPrestamo;
+    private String fechaVencimiento; // fecha de vencimiento
+    private String fechaDevolucion;  // se asigna cuando se devuelve
+    private Libro libro;
     private Usuario usuario;
-    private Estado estado;
+    private boolean devuelto;
 
-    public PrestamoLibro (String fechaPrestamo, String fechaDevolucion, Libro libro, Usuario usuario){
+    // Constructor de la clase PrestamoLibro
+    public PrestamoLibro(String idTransaccion, String fechaPrestamo, String fechaVencimiento, Libro libro, Usuario usuario) {
+        if (idTransaccion == null || fechaPrestamo == null || fechaVencimiento == null || libro == null || usuario == null) {
+            throw new IllegalArgumentException("Parámetros del préstamo no pueden ser nulos");
+        }
+        this.idTransaccion = idTransaccion;
         this.fechaPrestamo = fechaPrestamo;
-        this.fechaDevolucion = fechaDevolucion;
+        this.fechaVencimiento = fechaVencimiento;
+        this.fechaDevolucion = null;
         this.libro = libro;
         this.usuario = usuario;
-        this.setEstado(Estado.PRESTAMO);
+        this.devuelto = false;
     }
 
-    public static void devolverLibro(){
-        if(libro.getEstado() == Estado.PRESTAMO){
-            libro.setEstado(Estado.DISPONIBLE);
-        }
+    // Gets y sets
+    public String getIdTransaccion() {
+        return idTransaccion;
     }
 
     public String getFechaPrestamo() {
@@ -26,6 +35,14 @@ public class PrestamoLibro {
 
     public void setFechaPrestamo(String fechaPrestamo) {
         this.fechaPrestamo = fechaPrestamo;
+    }
+
+    public String getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getFechaDevolucion() {
@@ -40,33 +57,29 @@ public class PrestamoLibro {
         return libro;
     }
 
-    public void setLibro(Libro libro) {
-        this.libro = libro;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public boolean isDevuelto() {
+        return devuelto;
+    }
+
+    public void setDevuelto(boolean devuelto) {
+        this.devuelto = devuelto;
     }
 
     @Override
     public String toString() {
         return "PrestamoLibro{" +
-                "fechaPrestamo='" + fechaPrestamo + '\'' +
+                "idTransaccion='" + idTransaccion + '\'' +
+                ", fechaPrestamo='" + fechaPrestamo + '\'' +
+                ", fechaVencimiento='" + fechaVencimiento + '\'' +
                 ", fechaDevolucion='" + fechaDevolucion + '\'' +
                 ", libro=" + libro +
                 ", usuario=" + usuario +
+                ", devuelto=" + devuelto +
                 '}';
     }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
 }
+

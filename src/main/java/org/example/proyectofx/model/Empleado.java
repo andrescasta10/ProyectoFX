@@ -1,38 +1,43 @@
+// Empleado.java
 package org.example.proyectofx.model;
 
-//Clase padre Empleado
-public class Empleado {
-    private String nombre,identificacion;
+public abstract class Empleado {
+    private final int id;
+    private String nombre;
 
-    //Constructor de la clase Empleado
-    public Empleado(String nombre, String identificacion){
+    public Empleado(int id, String nombre) {
+        if (id <= 0) throw new IllegalArgumentException("ID de empleado inválido");
+        if (nombre == null) throw new IllegalArgumentException("Nombre no puede ser nulo");
+        this.id = id;
         this.nombre = nombre;
-        this.identificacion = identificacion;
     }
 
-    //Gets y Sets de la clase Empleado
-    public String getNombre(){
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre){
+    public void setNombre(String nombre) {
+        if (nombre == null) throw new IllegalArgumentException("Nombre no puede ser nulo");
         this.nombre = nombre;
     }
 
-    public String getIdentificacion() {
-        return identificacion;
+    /**
+     * Autenticación siempre exitosa; el empleado entra libremente.
+     */
+    public boolean authenticate() {
+        return true;
     }
 
-    public void setIdentificacion(String identificacion){
-        this.identificacion = identificacion;
-    }
-
-    //Metodo toString de la clase Empleado
     @Override
     public String toString() {
         return "Empleado{" +
-                "nombre='" + nombre + '\'' +
-                ", identificacion='" + identificacion + '\'' +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
                 '}';
     }
 }
+

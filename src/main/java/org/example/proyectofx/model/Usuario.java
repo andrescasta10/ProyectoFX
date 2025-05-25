@@ -1,66 +1,85 @@
+// Usuario.java
 package org.example.proyectofx.model;
 
-public class Usuario {
-    private String nombre, correo, contrasenia;
-    private int ID;
-    private Boolean deuda;
+public abstract class Usuario {
+    private String nombre;
+    private int id;
+    private String correo;
+    private String contrasenia;
+    private boolean deuda;
 
-
-    public Usuario(String nombre, int ID, String correo, String contrasenia, Boolean deuda){
+    // Constructor de la clase Usuario
+    public Usuario(String nombre, int id, String correo, String contrasenia) {
+        if (nombre == null || correo == null || contrasenia == null)
+            throw new IllegalArgumentException("Nombre, correo y contraseña no pueden ser nulos");
+        if (id <= 0) throw new IllegalArgumentException("ID inválido");
         this.nombre = nombre;
-        this.ID = ID;
+        this.id = id;
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.deuda = deuda;
+        this.deuda = false;
     }
-    public void setNombre(String nombre){
+
+    // Gets y sets
+    public void setNombre(String nombre) {
+        if (nombre == null) throw new IllegalArgumentException("Nombre no puede ser nulo");
         this.nombre = nombre;
     }
 
-    public String getNombre(){
+    public String getNombre() {
         return nombre;
     }
 
-    public void setID(int ID){
-        this.ID = ID;
+    public void setId(int id) {
+        if (id <= 0) throw new IllegalArgumentException("ID inválido");
+        this.id = id;
     }
 
-    public int getID(){
-        return ID;
+    public int getId() {
+        return id;
+    }
+
+    public void setCorreo(String correo) {
+        if (correo == null) throw new IllegalArgumentException("Correo no puede ser nulo");
+        this.correo = correo;
     }
 
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo){
-        this.correo = correo;
+    public void setContrasenia(String contrasenia) {
+        if (contrasenia == null) throw new IllegalArgumentException("Contraseña no puede ser nula");
+        this.contrasenia = contrasenia;
     }
 
     public String getContrasenia() {
         return contrasenia;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setDeuda(boolean deuda) {
+        this.deuda = deuda;
     }
 
-    public Boolean getDeuda() {
+    public boolean tieneDeuda() {
         return deuda;
     }
 
-    public void setDeuda(Boolean deuda) {
-        this.deuda = deuda;
-    }
+    public abstract int getMaximoLibrosPermitidos();
+
+    public abstract int getDiasMaximosPrestamo();
+
+    public abstract void buscarLibro(Biblioteca biblioteca, Libro libro);
 
     @Override
     public String toString() {
         return "Usuario{" +
                 "nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                ", ID=" + ID +
+                ", id=" + id +
                 ", deuda=" + deuda +
                 '}';
     }
 }
+
+

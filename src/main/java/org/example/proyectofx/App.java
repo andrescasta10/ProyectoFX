@@ -35,6 +35,6 @@ public class App extends Application {
 
     public void inicializarData() {
         Usuario usuario = new Usuario("Leon",1,"leon@uq.com", "123", Boolean.FALSE);
-        Biblioteca.verificarCredenciales(usuario);
+        Biblioteca.verificarCredenciales();
     }
 }
