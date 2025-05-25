@@ -21,23 +21,25 @@ public class Biblioteca {
         this.listUsuarios = new ArrayList<>();
     }
 
-    public static boolean verificarCredenciales(Usuario usuario) {
-       // String correoIngresado = JOptionPane.showInputDialog("Ingrese su correo");
-        //String contraseniaIngresada = JOptionPane.showInputDialog("Ingrese su contraseña");
+    public static Usuario verificarCredenciales(String correo, String contrasenia) throws Exception{
+       if (correo == null || correo.isEmpty()) throw new Exception("Verifique el correo ingresado");
+       if (contrasenia == null || contrasenia.isEmpty()) throw new Exception("Verifique la contraseña ingresada");
 
-        boolean permisoAcceso;
+       Usuario usuario = buscarUsuarioporCorreo(correo);
 
-       // if (correoIngresado.equals(usuario.getCorreo()) && contraseniaIngresada.equals(usuario.getContrasenia())) {
-            permisoAcceso = true;
-         //   JOptionPane.showMessageDialog(null," Acceso permitido. Bienvenido, " + usuario.getNombre());
-        //} else {
-            permisoAcceso = false;
-          //  JOptionPane.showMessageDialog(null," Usuario o contraseña incorrectos, por favor intente de nuevo.");
-       // }
-
-        return permisoAcceso;
+       if(usuario == null) throw new Exception("El correo no existe");
+       if (!usuario.getContrasenia().equals(contrasenia)) throw new Exception("La contraseña es incorrecta");
+       return usuario;
     }
 
+    public Usuario buscarUsuarioporCorreo(String correo){
+        for (Usuario usuario : listUsuarios){
+            if (usuario.getCorreo().equals(correo)){
+                return usuario;
+            }
+        }
+        return null;
+    }
 
     //Gets y Sets de la clase Biblioteca
     public String getNombre(){
