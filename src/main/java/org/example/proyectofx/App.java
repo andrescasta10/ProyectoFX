@@ -20,15 +20,12 @@ public class App extends Application {
         this.primaryStage.setTitle("Gestion de Clientes");
         openViewPrincipal();
     }
-    public static void main(String[] args){
-        launch();
-    }
 
     private void openViewPrincipal() {
         inicializarData();
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("primary.fxml"));
+            loader.setLocation(getClass().getResource("/org/example/proyectofx/primary.fxml"));
             javafx.scene.layout.VBox rootLayout = (javafx.scene.layout.VBox) loader.load();
             BibliotecaController bibliotecaController = loader.getController();
             bibliotecaController.setApp(this);
@@ -41,8 +38,11 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    public static void main(String[] args){
+        launch();
+    }
 
-    private void inicializarData() {
+    public void inicializarData() {
         Usuario usuario = new Usuario("Leon",1,"leon@uq.com", "123", Boolean.FALSE);
         Biblioteca.verificarCredenciales(usuario);
     }

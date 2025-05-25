@@ -22,18 +22,18 @@ public class Biblioteca {
     }
 
     public static boolean verificarCredenciales(Usuario usuario) {
-        String correoIngresado = JOptionPane.showInputDialog("Ingrese su correo");
-        String contraseniaIngresada = JOptionPane.showInputDialog("Ingrese su contraseña");
+       // String correoIngresado = JOptionPane.showInputDialog("Ingrese su correo");
+        //String contraseniaIngresada = JOptionPane.showInputDialog("Ingrese su contraseña");
 
         boolean permisoAcceso;
 
-        if (correoIngresado.equals(usuario.getCorreo()) && contraseniaIngresada.equals(usuario.getContrasenia())) {
+       // if (correoIngresado.equals(usuario.getCorreo()) && contraseniaIngresada.equals(usuario.getContrasenia())) {
             permisoAcceso = true;
-            JOptionPane.showMessageDialog(null," Acceso permitido. Bienvenido, " + usuario.getNombre());
-        } else {
+         //   JOptionPane.showMessageDialog(null," Acceso permitido. Bienvenido, " + usuario.getNombre());
+        //} else {
             permisoAcceso = false;
-            JOptionPane.showMessageDialog(null," Usuario o contraseña incorrectos, por favor intente de nuevo.");
-        }
+          //  JOptionPane.showMessageDialog(null," Usuario o contraseña incorrectos, por favor intente de nuevo.");
+       // }
 
         return permisoAcceso;
     }
