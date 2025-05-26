@@ -18,9 +18,9 @@ public class Visitante extends Usuario {
     }
 
     @Override
-    public void buscarLibro(Bibliotecario bibliotecario, Libro libro) {
+    public void buscarLibro(Biblioteca biblioteca, Libro libro) {
         boolean encontrado = false;
-        for (Libro l : bibliotecario.getListaLibros()) {
+        for (Libro l : biblioteca.getListaLibros()) {
             if (l.getID() == libro.getID()) {
                 encontrado = true;
                 break;
