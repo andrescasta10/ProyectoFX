@@ -151,7 +151,8 @@ public class AdministradorController {
                 biblioteca.registrarEmpleado(empleado);
                 listaEmpleados.add(empleado);
                 tblListEmpleados.setItems(listaEmpleados);
-                controller.crearAlerta("Se ha agregado el bibliotecario correctamente", Alert.AlertType.CONFIRMATION);
+                controller.crearAlerta("Se ha agregado el bibliotecario correctamente", Alert.AlertType.INFORMATION);
+                limpiarSeleccion();
             } catch (Exception e) {
                 controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -167,7 +168,8 @@ public class AdministradorController {
         else {
             listaEmpleados.remove(empleado);
             tblListEmpleados.setItems(listaEmpleados);
-            controller.crearAlerta("Se ha eliminado el bibliotecario correctamente", Alert.AlertType.CONFIRMATION);
+            controller.crearAlerta("Se ha eliminado el bibliotecario correctamente", Alert.AlertType.INFORMATION);
+            limpiarSeleccion();
             try{
                 biblioteca.eliminarEmpleado(empleado.getId());
             }
