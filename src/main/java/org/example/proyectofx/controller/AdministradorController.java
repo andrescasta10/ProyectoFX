@@ -112,6 +112,7 @@ public class AdministradorController {
                 biblioteca.registrarEmpleado(empleado);
                 listaEmpleados.add(empleado);
                 tblListEmpleados.setItems(listaEmpleados);
+                controller.crearAlerta("Se ha agregado el bibliotecario correctamente", Alert.AlertType.CONFIRMATION);
             } catch (Exception e) {
                 controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -120,7 +121,21 @@ public class AdministradorController {
 
     @FXML
     void onEliminarEmpleado(ActionEvent event) {
-
+        Empleado empleado = tblListEmpleados.getSelectionModel().getSelectedItem();
+        if (empleado == null){
+            controller.crearAlerta("Debe seleccionar un bibliotecario", Alert.AlertType.WARNING);
+        }
+        else {
+            listaEmpleados.remove(empleado);
+            tblListEmpleados.setItems(listaEmpleados);
+            controller.crearAlerta("Se ha eliminado el bibliotecario correctamente", Alert.AlertType.CONFIRMATION);
+            try{
+                biblioteca.eliminarEmpleado(empleado.getId());
+            }
+            catch (Exception e){
+                controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
     }
 
 }
