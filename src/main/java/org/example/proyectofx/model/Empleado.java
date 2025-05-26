@@ -2,7 +2,7 @@
 package org.example.proyectofx.model;
 
 public abstract class Empleado {
-    private final int id;
+    private int id;
     private String nombre;
 
     public Empleado(int id, String nombre) {
@@ -18,6 +18,10 @@ public abstract class Empleado {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNombre(String nombre) {

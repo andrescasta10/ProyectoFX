@@ -260,6 +260,35 @@ public class Biblioteca {
         }
     }
 
+    public Empleado buscarEmpleado(int id){
+        for(Empleado empleado : listaEmpleados){
+            if(empleado.getId() == (id)){
+                return  empleado;
+            }
+        }
+        return null;
+    }
+
+    public void editarEmpleado( Empleado empleado, int id, String nombre) throws Exception {
+
+
+        if (empleado.getId() == id) {
+            empleado.setNombre(nombre);
+            editar(empleado);
+        } else if (buscarEmpleado(id) != null) {
+            throw new Exception("Ya existe un empleado con el mismo id");
+        } else {
+            empleado.setId(id);
+            empleado.setNombre(nombre);
+            editar(empleado);
+        }
+    }
+
+    public void editar(Empleado empleado){
+        listaEmpleados.set(listaEmpleados.indexOf(empleado), empleado);
+    }
+
+
     // ----- Getters y Setters -----
 
     public String getNombre() {
