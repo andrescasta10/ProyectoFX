@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.example.proyectofx.model.Biblioteca;
 import org.example.proyectofx.model.Empleado;
 import org.example.proyectofx.model.Usuario;
@@ -111,6 +108,19 @@ public class BibliotecarioUsuarioController {
         }
     }
 
+    private void limpiarSeleccion() {
+        tblListUsuarios.getSelectionModel().clearSelection();
+        limpiarCamposEmpleado();
+    }
+
+    private void limpiarCamposEmpleado() {
+        idtxt.clear();
+        nombretxt.clear();
+        correotxt.clear();
+        contraseniatxt.clear();
+        deudatxt.clear();
+    }
+
     @FXML
     void onActualizarUsuario(ActionEvent event) {
 
@@ -118,11 +128,26 @@ public class BibliotecarioUsuarioController {
 
     @FXML
     void onAgregarUsuario(ActionEvent event) {
-
+        
     }
 
     @FXML
     void onEliminarUsuario(ActionEvent event) {
-
+        Usuario usuario = tblListUsuarios.getSelectionModel().getSelectedItem();
+        if (usuario == null){
+            controller.crearAlerta("Debe seleccionar un bibliotecario", Alert.AlertType.WARNING);
+        }
+        else {
+            listaUsuarios.remove(usuario);
+            tblListUsuarios.setItems(listaUsuarios);
+            controller.crearAlerta("Se ha eliminado el bibliotecario correctamente", Alert.AlertType.INFORMATION);
+            limpiarSeleccion();
+            try{
+                biblioteca.eliminarEmpleado(usuario.getId());
+            }
+            catch (Exception e){
+                controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
     }
 }

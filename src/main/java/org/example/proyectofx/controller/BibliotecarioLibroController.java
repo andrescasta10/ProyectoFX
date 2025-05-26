@@ -149,6 +149,20 @@ public class BibliotecarioLibroController {
         }
     }
 
+    private void limpiarSeleccion() {
+        tblListLibros.getSelectionModel().clearSelection();
+        limpiarCamposEmpleado();
+    }
+
+    private void limpiarCamposEmpleado() {
+        idtxt.clear();
+        autortxt.clear();
+        anioPublicaciontxt.clear();
+        titulotxt.clear();
+        generotxt.clear();
+        estadotxt.clear();
+    }
+
     @FXML
     void onActualizarlibro(ActionEvent event) {
 
