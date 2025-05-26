@@ -91,11 +91,6 @@ public class Biblioteca {
     @Override
     public String toString() {
         return "Biblioteca{" +
-                "nombre='" + nombre + '\'' +
-                ", empleados=" + listaEmpleados +
-                ", libros=" + listaLibros +
-                ", usuarios=" + listaUsuarios +
-                ", prestamos=" + listaPrestamos +
-                '}';
+                "nombre='" + nombre + '\'';
     }
 }
