@@ -61,6 +61,10 @@ public abstract class Usuario {
         this.deuda = deuda;
     }
 
+    public boolean getDeuda() {
+        return deuda;
+    }
+
     public boolean tieneDeuda() {
         return deuda;
     }

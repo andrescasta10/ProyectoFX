@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectofx.controller.BibliotecarioUsuarioController">
+    <children>
+        <Button fx:id="agregarUsuariotn" layoutX="237.0" layoutY="256.0" mnemonicParsing="false" onAction="#onAgregarUsuario" text="Agregar" />
+        <Button fx:id="actualizarUsuariobtn" layoutX="354.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActualizarUsuario" text="Actualizar" />
+        <Button fx:id="eliminarUsuariobtn" layoutX="484.0" layoutY="255.0" mnemonicParsing="false" onAction="#onEliminarUsuario" text="Eliminar" />
+        <TextField fx:id="nombretxt" layoutX="48.0" layoutY="54.0" promptText="Nombre" />
+        <TextField fx:id="idtxt" layoutX="219.0" layoutY="54.0" promptText="ID" />
+        <TextField fx:id="correotxt" layoutX="48.0" layoutY="153.0" promptText="Correo" />
+        <TextField fx:id="contraseniatxt" layoutX="48.0" layoutY="197.0" promptText="Contraseña" />
+        <TextField fx:id="deudatxt" layoutX="48.0" layoutY="104.0" promptText="Deuda" />
+        <TableView fx:id="tblListUsuarios" layoutX="74.0" layoutY="289.0" prefHeight="206.0" prefWidth="560.0">
+            <columns>
+                <TableColumn fx:id="tbcNombre" prefWidth="61.0" text="ID" />
+                <TableColumn fx:id="tbcID" prefWidth="135.0" text="Nombre" />
+                <TableColumn fx:id="tbcCorreo" prefWidth="152.0" text="Correo" />
+                <TableColumn fx:id="tbcContraseña" prefWidth="141.0" text="Contraseña" />
+                <TableColumn fx:id="tbcDeuda" minWidth="6.0" prefWidth="70.0" text="Deuda" />
+            </columns>
+        </TableView>
+    </children>
+
+</AnchorPane>

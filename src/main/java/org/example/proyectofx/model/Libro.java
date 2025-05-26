@@ -1,6 +1,8 @@
 // Libro.java
 package org.example.proyectofx.model;
 
+import java.time.LocalDate;
+
 public abstract class Libro {
     protected int id;
     protected int anioPublicacion;
