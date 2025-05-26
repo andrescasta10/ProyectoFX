@@ -7,4 +7,7 @@ module org.example.proyectofx {
 
     opens org.example.proyectofx to javafx.fxml;
     exports org.example.proyectofx;
+    exports org.example.proyectofx.controller;
+
+    opens org.example.proyectofx.controller to javafx.fxml;
 }

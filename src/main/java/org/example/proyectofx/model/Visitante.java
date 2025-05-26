@@ -3,8 +3,8 @@ package org.example.proyectofx.model;
 
 public class Visitante extends Usuario {
 
-    public Visitante(String nombre, int id, String correo, String contrasenia) {
-        super(nombre, id, correo, contrasenia);
+    public Visitante(String nombre, int id, String correo, String contrasenia, boolean deuda) {
+        super(nombre, id, correo, contrasenia, deuda);
     }
 
     @Override

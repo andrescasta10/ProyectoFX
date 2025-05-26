@@ -1,11 +1,13 @@
 package org.example.proyectofx.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.proyectofx.App;
 import org.example.proyectofx.model.Biblioteca;
+import org.example.proyectofx.model.Sesion;
 import org.example.proyectofx.model.Usuario;
 
 public class InicioUsuarioController {
@@ -26,19 +28,22 @@ public class InicioUsuarioController {
 
     private final Controller controller = Controller.getInstancia();
     private final Biblioteca biblioteca = Controller.getBiblioteca();
+    private final Sesion sesion = Sesion.getInstancia();
 
     @FXML
     public void onVerificarCredencial() {
         String correo = correotxt.getText();
         String password = contratxt.getText();
 
-        Usuario usuario = new Usuario("Desconocido", 0, correo, password, false);
-        boolean credencialValida = biblioteca.verificarCredencial(usuario);
-
-        if (credencialValida) {
-            System.out.println("¡Inicio de sesión exitoso!");
-        } else {
-            System.out.println("Correo o contraseña incorrectos.");
+        try {
+            Usuario usuario = biblioteca.verificarCredenciales(correo, password);
+            if (usuario != null){
+                sesion.setUsuario(usuario);
+                controller.crearAlerta("Se ha iniciado sesion correctamente", Alert.AlertType.CONFIRMATION);
+            }
+        }
+        catch (Exception e){
+            controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 }

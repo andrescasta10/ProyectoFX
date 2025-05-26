@@ -14,14 +14,16 @@ public class InicioController {
     @FXML
     private Button usuariobtn;
 
+    private final Controller controller = Controller.getInstancia();
+
     @FXML
     void onOpenInicioAdministrador(ActionEvent event) {
-
+        controller.navegarVentana(administradorbtn,"/org/example/proyectofx/Administrador.fxml", "Ventana Administrador");
     }
 
     @FXML
     void onOpenInicioUsuario(ActionEvent event) {
-
+        controller.navegarVentana(usuariobtn,"/org/example/proyectofx/inicioUsuario.fxml","Inicio Sesion");
     }
 
     @FXML

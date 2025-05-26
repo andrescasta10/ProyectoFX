@@ -9,7 +9,7 @@ public abstract class Usuario {
     private boolean deuda;
 
     // Constructor de la clase Usuario
-    public Usuario(String nombre, int id, String correo, String contrasenia) {
+    public Usuario(String nombre, int id, String correo, String contrasenia, boolean deuda) {
         if (nombre == null || correo == null || contrasenia == null)
             throw new IllegalArgumentException("Nombre, correo y contraseña no pueden ser nulos");
         if (id <= 0) throw new IllegalArgumentException("ID inválido");
@@ -17,7 +17,7 @@ public abstract class Usuario {
         this.id = id;
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.deuda = false;
+        this.deuda = deuda;
     }
 
     // Gets y sets

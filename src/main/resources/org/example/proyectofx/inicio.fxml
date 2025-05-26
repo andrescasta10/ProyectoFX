@@ -32,7 +32,7 @@
       </Text>
       <ImageView fitHeight="145.0" fitWidth="259.0" layoutX="261.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../img/uq.png" />
+            <Image url="@img/uq.png" />
          </image>
       </ImageView>
       <Button fx:id="usuariobtn" layoutX="350.0" layoutY="426.0" mnemonicParsing="false" onAction="#onOpenInicioUsuario" text="Usuario">

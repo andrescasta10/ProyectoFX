@@ -3,8 +3,8 @@ package org.example.proyectofx.model;
 
 public class Estudiante extends Usuario implements IUsuario {
 
-    public Estudiante(String nombre, int id, String correo, String contrasenia) {
-        super(nombre, id, correo, contrasenia);
+    public Estudiante(String nombre, int id, String correo, String contrasenia, boolean deuda) {
+        super(nombre, id, correo, contrasenia, deuda);
     }
 
     @Override

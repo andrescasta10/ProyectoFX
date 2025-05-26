@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import org.example.proyectofx.model.Biblioteca;
+import org.example.proyectofx.model.Docente;
 import org.example.proyectofx.model.Usuario;
 
 public class App extends Application {
@@ -18,7 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/inicio.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/example/proyectofx/inicio.fxml"));
         Parent parent = loader.load();
 
         Scene scene = new Scene(parent);
@@ -34,7 +35,7 @@ public class App extends Application {
     }
 
     public void inicializarData() {
-        Usuario usuario = new Usuario("Leon",1,"leon@uq.com", "123", Boolean.FALSE);
-        Biblioteca.verificarCredenciales();
+
+        Usuario docente = new Docente("Leon",1,"leon@uq.com", "123", false);
     }
 }

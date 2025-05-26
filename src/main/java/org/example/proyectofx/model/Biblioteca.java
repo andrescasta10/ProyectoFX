@@ -22,7 +22,7 @@ public class Biblioteca {
         this.listaPrestamos = new ArrayList<>();
     }
 
-    public static Usuario verificarCredenciales(String correo, String contrasenia) throws Exception{
+    public Usuario verificarCredenciales(String correo, String contrasenia) throws Exception{
         if (correo == null || correo.isEmpty()) throw new Exception("Verifique el correo ingresado");
         if (contrasenia == null || contrasenia.isEmpty()) throw new Exception("Verifique la contraseña ingresada");
 
