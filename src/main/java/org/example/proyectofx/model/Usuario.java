@@ -69,7 +69,7 @@ public abstract class Usuario {
 
     public abstract int getDiasMaximosPrestamo();
 
-    public abstract void buscarLibro(Biblioteca biblioteca, Libro libro);
+    public abstract void buscarLibro(Bibliotecario bibliotecario, Libro libro);
 
     @Override
     public String toString() {

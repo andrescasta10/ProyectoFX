@@ -18,9 +18,9 @@ public class Estudiante extends Usuario implements IUsuario {
     }
 
     @Override
-    public void buscarLibro(Biblioteca biblioteca, Libro libro) {
+    public void buscarLibro(Bibliotecario bibliotecario, Libro libro) {
         boolean encontrado = false;
-        for (Libro l : biblioteca.getListaLibros()) {
+        for (Libro l : bibliotecario.getListaLibros()) {
             if (l.getID() == libro.getID()) {
                 encontrado = true;
                 break;
@@ -34,7 +34,7 @@ public class Estudiante extends Usuario implements IUsuario {
     }
 
     @Override
-    public boolean solicitarPrestamo(Biblioteca biblioteca, Libro libro) throws Exception {
-        return biblioteca.registrarPrestamo(this, libro);
+    public boolean solicitarPrestamo(Bibliotecario bibliotecario, Libro libro) throws Exception {
+        return bibliotecario.registrarPrestamo(this, libro);
     }
 }
