@@ -87,9 +87,48 @@ public class AdministradorController {
         }
     }
 
+    private void limpiarSeleccion() {
+        tblListEmpleados.getSelectionModel().clearSelection();
+        limpiarCamposEmpleado();
+    }
+
+    private void limpiarCamposEmpleado() {
+        idtxt.clear();
+        nombretxt.clear();
+    }
+
     @FXML
     void onActualizarEmpleado(ActionEvent event) {
 
+        String idString = idtxt.getText();
+        String nombre = nombretxt.getText();
+        Empleado empleado = tblListEmpleados.getSelectionModel().getSelectedItem();
+        if (empleado == null){
+            controller.crearAlerta("Seleccione el bibliotecario que desea actualizar", Alert.AlertType.WARNING);
+            return;
+        }
+        int id = 0;
+        try{
+            id = Integer.parseInt(idString);
+        }
+        catch (NumberFormatException e){
+            controller.crearAlerta("Verifique el ID debe ser un número", Alert.AlertType.ERROR);
+        }
+        if (nombre.isEmpty()){
+            controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+        }
+        else {
+            Empleado empleadoModificado = new Bibliotecario(id, nombre);
+            try {
+                biblioteca.modificarEmpleado(empleado.getId(), empleadoModificado);
+                listaEmpleados.setAll(biblioteca.getListaEmpleados());
+                tblListEmpleados.setItems(listaEmpleados);
+                controller.crearAlerta("Se ha actualizado el bibliotecario correctamente", Alert.AlertType.INFORMATION);
+                limpiarSeleccion();
+            } catch (Exception e) {
+                controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
     }
 
     @FXML
