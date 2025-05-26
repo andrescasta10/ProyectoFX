@@ -56,18 +56,28 @@ public class Biblioteca {
         listaEmpleados.add(emp);
     }
 
-    public void modificarEmpleado(Empleado empModificado) throws Exception {
+    public void modificarEmpleado(int idOriginal, Empleado empModificado) throws Exception {
         boolean encontrado = false;
+
+        // Validamos si el nuevo ID ya existe en otro empleado (diferente del actual)
+        for (Empleado e : listaEmpleados) {
+            if (e.getId() == empModificado.getId() && e.getId() != idOriginal) {
+                throw new Exception("Ya existe un empleado con el nuevo ID: " + empModificado.getId());
+            }
+        }
+
         for (int i = 0; i < listaEmpleados.size(); i++) {
-            Empleado e = listaEmpleados.get(i);
-            if (e.getId() == empModificado.getId()) {
+            Empleado actual = listaEmpleados.get(i);
+
+            if (actual.getId() == idOriginal) {
                 listaEmpleados.set(i, empModificado);
                 encontrado = true;
                 break;
             }
         }
+
         if (!encontrado) {
-            throw new Exception("No existe empleado con ID: " + empModificado.getId());
+            throw new Exception("No se encontró empleado con ID original: " + idOriginal);
         }
     }
 
