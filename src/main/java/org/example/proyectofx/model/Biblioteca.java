@@ -59,7 +59,7 @@ public class Biblioteca {
     public void modificarEmpleado(int idOriginal, Empleado empModificado) throws Exception {
         boolean encontrado = false;
 
-        
+
         for (Empleado e : listaEmpleados) {
             if (e.getId() == empModificado.getId() && e.getId() != idOriginal) {
                 throw new Exception("Ya existe un empleado con el nuevo ID: " + empModificado.getId());
