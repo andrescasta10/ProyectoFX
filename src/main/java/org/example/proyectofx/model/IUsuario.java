@@ -4,5 +4,5 @@ public interface IUsuario {
     /**
      * Solicita un préstamo. Lanza excepción si no se puede concretar.
      */
-    boolean solicitarPrestamo(Biblioteca biblioteca, Libro libro) throws Exception;
+    boolean solicitarPrestamo(Bibliotecario bibliotecario, Libro libro) throws Exception;
 }
