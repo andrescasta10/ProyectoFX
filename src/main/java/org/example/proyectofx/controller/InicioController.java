@@ -28,6 +28,6 @@ public class InicioController {
 
     @FXML
     void onOpenInicioBibliotecario(ActionEvent event) {
-
+        controller.navegarVentana(bibliotecariobtn,"/org/example/proyectofx/inicioBibliotecario.fxml","Inicio Bibliotecario");
     }
 }

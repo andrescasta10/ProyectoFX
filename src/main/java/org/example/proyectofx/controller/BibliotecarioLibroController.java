@@ -1,15 +1,13 @@
 package org.example.proyectofx.controller;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.example.proyectofx.model.*;
 
 public class BibliotecarioLibroController {
@@ -23,10 +21,10 @@ public class BibliotecarioLibroController {
     private Button agregarlibrobtn;
 
     @FXML
-    private TextField autortxt;
+    private TextField anioPublicaciontxt;
 
     @FXML
-    private TextField anioPublicaciontxt;
+    private TextField autortxt;
 
     @FXML
     private TextField editorialtxt;
@@ -38,10 +36,10 @@ public class BibliotecarioLibroController {
     private TextField enlacetxt;
 
     @FXML
-    private TextField estadotxt;
+    private ComboBox<Estado> estadocbox;
 
     @FXML
-    private TextField formatotxt;
+    private ComboBox<Formato> formatocbox;
 
     @FXML
     private TextField generotxt;
@@ -53,22 +51,13 @@ public class BibliotecarioLibroController {
     private TextField numeroPaginastxt;
 
     @FXML
-    private TableColumn<Libro, String> tbcAutor;
-
-    @FXML
     private TableColumn<Libro, Integer> tbcAnioPublicacion;
 
     @FXML
-    private TableColumn<LibroFisico, String> tbcEditorial;
-
-    @FXML
-    private TableColumn<LibroDigital, String> tbcEnlace;
+    private TableColumn<Libro, String> tbcAutor;
 
     @FXML
     private TableColumn<Libro, Estado> tbcEstado;
-
-    @FXML
-    private TableColumn<LibroDigital, Formato> tbcFormato;
 
     @FXML
     private TableColumn<Libro, String> tbcGenero;
@@ -77,16 +66,13 @@ public class BibliotecarioLibroController {
     private TableColumn<Libro, Integer> tbcID;
 
     @FXML
-    private TableColumn<LibroFisico, Integer> tbcNumeroPaginas;
-
-    @FXML
     private TableColumn<Libro, String> tbcTitulo;
 
     @FXML
-    private TableColumn<LibroFisico, String> tbcUbicacionEstanteria;
+    private TableView<Libro> tblListLibros;
 
     @FXML
-    private TableView<Libro> tblListLibros;
+    private ComboBox<TipoLibro> tipolibrocbox;
 
     @FXML
     private TextField titulotxt;
@@ -108,6 +94,9 @@ public class BibliotecarioLibroController {
         // Traer los datos del cliente a la tabla
         initDataBinding();
 
+        // Carga las opciones del combo box
+        cargarOpcionesComboBox();
+
         // Obtiene la lista
         obtenerLibros();
 
@@ -119,12 +108,34 @@ public class BibliotecarioLibroController {
 
         // Seleccionar elemento de la tabla
         listenerSelection();
+
+        //Metodo para resaltar casillas a rellenar
+        listenerTipoLibro();
     }
 
     private void initDataBinding() {
         tbcID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
+        tbcAnioPublicacion.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAnioPublicacion()).asObject());
+        tbcTitulo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitulo()));
         tbcAutor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAutor()));
+        tbcGenero.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGenero()));
+        tbcEstado.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEstado()));
         // Usamos SimpleObjectProperty para manejar Double y Integer correctamente
+    }
+
+    private void cargarOpcionesComboBox(){
+        Estado[] estados = Estado.values();
+        for (Estado estado : estados){
+            estadocbox.getItems().add(estado);
+        }
+        Formato[] formatos = Formato.values();
+        for (Formato formato : formatos){
+            formatocbox.getItems().add(formato);
+        }
+        TipoLibro[] tiposLibros = TipoLibro.values();
+        for (TipoLibro tipoLibro : tiposLibros){
+            tipolibrocbox.getItems().add(tipoLibro);
+        }
     }
 
     private void obtenerLibros() {
@@ -138,8 +149,35 @@ public class BibliotecarioLibroController {
         });
     }
 
+    private void listenerTipoLibro() {
+        tipolibrocbox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            resaltarCasillasTipoLibro();
+        });
+    }
+
+    private void resaltarCasillasTipoLibro(){
+        numeroPaginastxt.setDisable(false);
+        editorialtxt.setDisable(false);
+        ubicacionEstanteriatxt.setDisable(false);
+        formatocbox.setDisable(false);
+        enlacetxt.setDisable(false);
+        TipoLibro tipoLibro = tipolibrocbox.getSelectionModel().getSelectedItem();
+        if (tipoLibro.equals(TipoLibro.FISICO)){
+            formatocbox.setDisable(true);
+            enlacetxt.setDisable(true);
+        } else if (tipoLibro.equals(TipoLibro.DIGITAL)) {
+            numeroPaginastxt.setDisable(true);
+            editorialtxt.setDisable(true);
+            ubicacionEstanteriatxt.setDisable(true);
+        } else if (tipoLibro.equals(TipoLibro.REFERENCIA)) {
+            controller.crearAlerta("Tenga en cuenta que: \n" +
+                    "El libro es de tipo REFERENCIA este no tiene datos propios y solo puede ser consultado", Alert.AlertType.WARNING);
+        }
+    }
+
     private void mostrarInformacionLibro(Libro libro) {
         if (libro != null) {
+            if (libro instanceof LibroFisico)
             idtxt.setText(libro.getID()+"");
             autortxt.setText(libro.getAutor());
             anioPublicaciontxt.setText(libro.getAnioPublicacion()+"");

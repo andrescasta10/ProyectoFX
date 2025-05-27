@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectofx.controller.BibliotecarioLibroController">
+<AnchorPane prefHeight="518.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectofx.controller.BibliotecarioLibroController">
     <children>
         <Button fx:id="agregarlibrobtn" layoutX="237.0" layoutY="256.0" mnemonicParsing="false" onAction="#onAgregarlibro" text="Agregar" />
         <Button fx:id="actualizarempleadobtn" layoutX="354.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActualizarlibro" text="Actualizar" />
         <Button fx:id="eliminarempleadobtn" layoutX="484.0" layoutY="255.0" mnemonicParsing="false" onAction="#onEliminarlibro" text="Eliminar" />
         <Button fx:id="Prestamosbtn" layoutX="595.0" layoutY="255.0" mnemonicParsing="false" onAction="#onPrestamosLibro" text="Prestamos" />
-        <TextField fx:id="idtxt" layoutX="48.0" layoutY="54.0" promptText="ID" />
-        <TextField fx:id="anioPublicaciontxt" layoutX="219.0" layoutY="54.0" promptText="Año de publicacion" />
-        <TextField fx:id="titulotxt" layoutX="48.0" layoutY="153.0" promptText="Titulo" />
-        <TextField fx:id="autortxt" layoutX="48.0" layoutY="197.0" promptText="Autor" />
-        <TextField fx:id="generotxt" layoutX="48.0" layoutY="104.0" promptText="Genero" />
-        <TextField fx:id="estadotxt" layoutX="219.0" layoutY="104.0" promptText="Estado" />
-        <TextField fx:id="numeroPaginastxt" layoutX="219.0" layoutY="153.0" promptText="Numero de paginas" />
-        <TextField fx:id="editorialtxt" layoutX="219.0" layoutY="197.0" promptText="Editorial" />
-        <TextField fx:id="ubicacionEstanteriatxt" layoutX="390.0" layoutY="54.0" promptText="Ubicacion" />
-        <TextField fx:id="formatotxt" layoutX="390.0" layoutY="104.0" promptText="Formato" />
-        <TextField fx:id="enlacetxt" layoutX="390.0" layoutY="153.0" promptText="Enlace" />
-        <TableView fx:id="tblListLibros" layoutX="14.0" layoutY="312.0" prefHeight="206.0" prefWidth="925.0">
+        <TextField fx:id="idtxt" layoutX="39.0" layoutY="54.0" promptText="ID" />
+        <TextField fx:id="anioPublicaciontxt" layoutX="39.0" layoutY="197.0" promptText="Año de publicacion" />
+        <TextField fx:id="titulotxt" layoutX="39.0" layoutY="129.0" promptText="Titulo" />
+        <TextField fx:id="autortxt" layoutX="39.0" layoutY="166.0" promptText="Autor" />
+        <TextField fx:id="generotxt" layoutX="39.0" layoutY="92.0" promptText="Genero" />
+        <TextField fx:id="numeroPaginastxt" layoutX="219.0" layoutY="54.0" promptText="Numero de paginas" />
+        <TextField fx:id="editorialtxt" layoutX="219.0" layoutY="92.0" promptText="Editorial" />
+        <TextField fx:id="ubicacionEstanteriatxt" layoutX="219.0" layoutY="129.0" promptText="Ubicacion" />
+        <TextField fx:id="enlacetxt" layoutX="403.0" layoutY="92.0" promptText="Enlace" />
+        <TableView fx:id="tblListLibros" layoutX="14.0" layoutY="312.0" prefHeight="206.0" prefWidth="717.0">
             <columns>
-                <TableColumn fx:id="tbcID" prefWidth="27.0" text="ID" />
-                <TableColumn fx:id="tbcAnioPublicacion" prefWidth="114.0" text="Año de publicacion" />
-                <TableColumn fx:id="tbcTitulo" prefWidth="146.0" text="Titulo" />
-                <TableColumn fx:id="tbcAutor" prefWidth="133.0" text="Autor" />
-                <TableColumn fx:id="tbcGenero" minWidth="6.0" prefWidth="82.0" text="Genero" />
-                <TableColumn fx:id="tbcEstado" prefWidth="62.0" text="Estado" />
-                <TableColumn fx:id="tbcNumeroPaginas" prefWidth="66.0" text="#Paginas" />
-                <TableColumn fx:id="tbcEditorial" prefWidth="63.0" text="Editorial" />
-                <TableColumn fx:id="tbcUbicacionEstanteria" prefWidth="79.0" text="Ubicacion" />
-                <TableColumn fx:id="tbcFormato" prefWidth="69.0" text="Formato" />
-                <TableColumn fx:id="tbcEnlace" minWidth="6.0" prefWidth="83.0" text="Enlace" />
+                <TableColumn fx:id="tbcID" prefWidth="56.0" text="ID" />
+                <TableColumn fx:id="tbcAnioPublicacion" prefWidth="138.0" text="Año de publicacion" />
+                <TableColumn fx:id="tbcTitulo" prefWidth="116.0" text="Titulo" />
+                <TableColumn fx:id="tbcAutor" prefWidth="144.0" text="Autor" />
+                <TableColumn fx:id="tbcGenero" minWidth="6.0" prefWidth="127.0" text="Genero" />
+                <TableColumn fx:id="tbcEstado" prefWidth="135.0" text="Estado" />
             </columns>
         </TableView>
+      <ComboBox fx:id="estadocbox" layoutX="39.0" layoutY="230.0" prefWidth="150.0" promptText="Seleccione el estado" />
+      <ComboBox fx:id="formatocbox" layoutX="396.0" layoutY="54.0" prefHeight="25.0" prefWidth="162.0" promptText="Seleccione el formato" />
+      <ComboBox fx:id="tipolibrocbox" layoutX="581.0" layoutY="14.0" prefHeight="25.0" prefWidth="186.0" promptText="Seleccione el tipo del libro" />
+      <Text layoutX="59.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Información Libro" />
+      <Text layoutX="233.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Información Libro Fisico" />
+      <Text layoutX="412.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Información Libro Digital" />
     </children>
+   <padding>
+      <Insets right="10.0" />
+   </padding>
 
 </AnchorPane>
