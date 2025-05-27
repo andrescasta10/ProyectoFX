@@ -107,6 +107,46 @@ public class Biblioteca {
         listaLibros.add(libro);
     }
 
+    // eliminar un libro de la lista de libros
+    public void eliminarLibro(int libroId) throws Exception {
+        boolean eliminado = false;
+        for (int i = 0; i < listaLibros.size(); i++) {
+            Libro l = listaLibros.get(i);
+            if (l.getID() == libroId) {
+                listaLibros.remove(i);
+                eliminado = true;
+                break;
+            }
+        }
+        if (!eliminado) {
+            throw new Exception("No existe libro con ID: " + libroId);
+        }
+    }
+    //Modificar un libro de las lista de libros
+    public void modificarLibro(int idOriginal, Libro libroModificado) throws Exception {
+        boolean encontrado = false;
+
+        for (Libro x : listaLibros) {
+            if (x.getID() == libroModificado.getID() && x.getID() != idOriginal) {
+                throw new Exception("Ya existe un libro con el nuevo ID: " + libroModificado.getID());
+            }
+        }
+
+        for (int i = 0; i < listaLibros.size(); i++) {
+            Libro actual = listaLibros.get(i);
+
+            if (actual.getID() == idOriginal) {
+                listaLibros.set(i, libroModificado);
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            throw new Exception("No se encontró libro con ID original: " + idOriginal);
+        }
+    }
+
     public boolean buscarLibro(Libro libro) {
         for (Libro libroB : listaLibros) {
             if (libro.getID() == libroB.getID()) {
@@ -125,6 +165,48 @@ public class Biblioteca {
             }
         }
         listaUsuarios.add(usuario);
+    }
+
+    // eliminar un Usuario de la lista de libros
+    public void eliminarUsuario(int usuarioId) throws Exception {
+        boolean eliminado = false;
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            Usuario u = listaUsuarios.get(i);
+            if (u.getId() == usuarioId) {
+                listaUsuarios.remove(i);
+                eliminado = true;
+                break;
+            }
+        }
+        if (!eliminado) {
+            throw new Exception("No existe Usuario con ID: " + usuarioId);
+        }
+    }
+
+    //Modificar un Usuario de las lista de Usuarios
+    public void modificarUsuario(int idOriginal, Usuario UsuarioModificado) throws Exception {
+        boolean encontrado = false;
+
+
+        for (Usuario z : listaUsuarios) {
+            if (z.getId() == UsuarioModificado.getId() && z.getId() != idOriginal) {
+                throw new Exception("Ya existe un Usuario con el nuevo ID: " + UsuarioModificado.getId());
+            }
+        }
+
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            Usuario actual = listaUsuarios.get(i);
+
+            if (actual.getId() == idOriginal) {
+                listaUsuarios.set(i, UsuarioModificado);
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            throw new Exception("No se encontró Usuario con ID original: " + idOriginal);
+        }
     }
 
     // ----- Gestión de Préstamos -----

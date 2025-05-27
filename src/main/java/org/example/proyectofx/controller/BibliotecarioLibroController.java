@@ -177,47 +177,244 @@ public class BibliotecarioLibroController {
 
     private void mostrarInformacionLibro(Libro libro) {
         if (libro != null) {
-            if (libro instanceof LibroFisico)
+            tipolibrocbox.setDisable(true);
             idtxt.setText(libro.getID()+"");
             autortxt.setText(libro.getAutor());
             anioPublicaciontxt.setText(libro.getAnioPublicacion()+"");
             titulotxt.setText(libro.getTitulo());
             generotxt.setText(libro.getGenero());
-            estadotxt.setText(libro.getEstado()+"");
+            estadocbox.setValue(libro.getEstado());
+            switch (libro) {
+                case LibroFisico libroFisico -> {
+                    numeroPaginastxt.setText(libroFisico.getNumeroPaginas() + "");
+                    editorialtxt.setText(libroFisico.getEditorial());
+                    ubicacionEstanteriatxt.setText(libroFisico.getUbicacionEstanteria());
+                    tipolibrocbox.setValue(TipoLibro.FISICO);
+                }
+                case LibroDigital libroDigital -> {
+                    formatocbox.setValue(libroDigital.getFormato());
+                    enlacetxt.setText(libroDigital.getEnlaceDescarga());
+                    tipolibrocbox.setValue(TipoLibro.DIGITAL);
+                }
+                case LibroReferencia libroReferencia -> tipolibrocbox.setValue(TipoLibro.REFERENCIA);
+                default -> {
+                    controller.crearAlerta("Ha ocurrido un errror", Alert.AlertType.ERROR);
+                }
+            }
         }
     }
 
     private void limpiarSeleccion() {
         tblListLibros.getSelectionModel().clearSelection();
-        limpiarCamposEmpleado();
+        limpiarCamposLibro();
     }
 
-    private void limpiarCamposEmpleado() {
+    private void limpiarCamposLibro() {
         idtxt.clear();
         autortxt.clear();
         anioPublicaciontxt.clear();
         titulotxt.clear();
         generotxt.clear();
-        estadotxt.clear();
+        estadocbox.getSelectionModel().clearSelection();
+        numeroPaginastxt.clear();
+        editorialtxt.clear();
+        ubicacionEstanteriatxt.clear();
+        formatocbox.getSelectionModel().clearSelection();
+        enlacetxt.clear();
     }
 
     @FXML
     void onActualizarlibro(ActionEvent event) {
+        Libro libro = tblListLibros.getSelectionModel().getSelectedItem();
+        if (libro == null){
+            controller.crearAlerta("Debe seleccionar un libro", Alert.AlertType.WARNING);
+            return;
+        }
+        String idString = idtxt.getText();
+        String anioPublicacionString = anioPublicaciontxt.getText();
+        String titulo = titulotxt.getText();
+        String autor = autortxt.getText();
+        String genero = generotxt.getText();
+        Estado estado = estadocbox.getSelectionModel().getSelectedItem();
+        int id = 0;
+        int anioPublicacion = 0;
+        try{
+            id = Integer.parseInt(idString);
+            anioPublicacion = Integer.parseInt(anioPublicacionString);
+        }
+        catch (NumberFormatException e){
+            controller.crearAlerta("Verifique el ID o el año de publicación deben ser un número", Alert.AlertType.ERROR);
+        }
+        if (titulo.isEmpty() || autor.isEmpty() || genero.isEmpty() || estado == null){
+            controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+        }
+        else {
+            if (libro instanceof LibroFisico){
+                String numPagString = numeroPaginastxt.getText();
+                String editorial = editorialtxt.getText();
+                String ubicacion = ubicacionEstanteriatxt.getText();
+                int numPag = 0;
+                try{
+                    numPag = Integer.parseInt(numPagString);
+                } catch (NumberFormatException e) {
+                    controller.crearAlerta("Verifique el número de páginas debe ser un número", Alert.AlertType.ERROR);
+                }
+                if (editorial.isEmpty() || ubicacion.isEmpty()){
+                    controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+                }
+                else {
+                    Libro libroEditado = new LibroFisico(id, titulo, autor, genero, anioPublicacion, estado, numPag, editorial, ubicacion);
+                    try {
+                        biblioteca.modificarLibro(libro.getID(), libroEditado);
+                        listaLibros.setAll(biblioteca.getListaLibros());
+                        tblListLibros.setItems(listaLibros);
+                        controller.crearAlerta("Se ha actualizado el libro fisico correctamente", Alert.AlertType.INFORMATION);
+                        limpiarSeleccion();
+                    } catch (Exception e) {
+                        controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }
+            } else if (libro instanceof LibroDigital) {
+                Formato formato = formatocbox.getSelectionModel().getSelectedItem();
+                String enlace = enlacetxt.getText();
+                if (formato == null || enlace.isEmpty()){
+                    controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+                }
+                else {
+                    Libro libroEditado = new LibroDigital(id, titulo, autor, genero, anioPublicacion, estado, formato, enlace);
+                    try {
+                        biblioteca.modificarLibro(libro.getID(), libroEditado);
+                        listaLibros.setAll(biblioteca.getListaLibros());
+                        tblListLibros.setItems(listaLibros);
+                        controller.crearAlerta("Se ha actualizado el libro digital correctamente", Alert.AlertType.INFORMATION);
+                        limpiarSeleccion();
+                    } catch (Exception e) {
+                        controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }
+            } else if (libro instanceof LibroReferencia) {
+                Libro libroEditado = new LibroReferencia(id, titulo, autor, genero, anioPublicacion);
+                try {
+                    biblioteca.modificarLibro(libro.getID(), libroEditado);
+                    listaLibros.setAll(biblioteca.getListaLibros());
+                    tblListLibros.setItems(listaLibros);
+                    controller.crearAlerta("Se ha actualizado el libro digital correctamente", Alert.AlertType.INFORMATION);
+                    limpiarSeleccion();
+                } catch (Exception e) {
+                    controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        }
 
     }
 
     @FXML
     void onAgregarlibro(ActionEvent event) {
+        TipoLibro tipoLibro = tipolibrocbox.getSelectionModel().getSelectedItem();
+        if (tipoLibro == null){
+            controller.crearAlerta("Primero debe seleccionar un tipo de libro", Alert.AlertType.WARNING);
+            return;
+        }
+        String idString = idtxt.getText();
+        String anioPublicacionString = anioPublicaciontxt.getText();
+        String titulo = titulotxt.getText();
+        String autor = autortxt.getText();
+        String genero = generotxt.getText();
+        Estado estado = estadocbox.getSelectionModel().getSelectedItem();
+        int id = 0;
+        int anioPublicacion = 0;
+        try{
+            id = Integer.parseInt(idString);
+            anioPublicacion = Integer.parseInt(anioPublicacionString);
+        }
+        catch (NumberFormatException e){
+            controller.crearAlerta("Verifique el ID y el año de publicación deben ser un número", Alert.AlertType.ERROR);
+        }
+        if (titulo.isEmpty() || autor.isEmpty() || genero.isEmpty() || estado == null){
+            controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+        }
+        else {
+            if (tipoLibro.equals(TipoLibro.FISICO)){
+                String numPagString = numeroPaginastxt.getText();
+                String editorial = editorialtxt.getText();
+                String ubicacion = ubicacionEstanteriatxt.getText();
+                int numPag = 0;
+                try{
+                    numPag = Integer.parseInt(numPagString);
+                } catch (NumberFormatException e) {
+                    controller.crearAlerta("Verifique el número de páginas debe ser un número", Alert.AlertType.ERROR);
+                }
+                if (editorial.isEmpty() || ubicacion.isEmpty()){
+                    controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+                }
+                else {
+                    Libro libro = new LibroFisico(id, titulo, autor, genero, anioPublicacion, estado, numPag, editorial, ubicacion);
+                    try {
+                        biblioteca.registrarLibro(libro);
+                        listaLibros.add(libro);
+                        tblListLibros.setItems(listaLibros);
+                        controller.crearAlerta("Se ha agregado el libro fisico correctamente", Alert.AlertType.INFORMATION);
+                        limpiarSeleccion();
+                    } catch (Exception e) {
+                        controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }
 
+            } else if (tipoLibro.equals(TipoLibro.DIGITAL)) {
+                Formato formato = formatocbox.getSelectionModel().getSelectedItem();
+                String enlace = enlacetxt.getText();
+                if (formato == null || enlace.isEmpty()){
+                    controller.crearAlerta("Verifique los campos", Alert.AlertType.ERROR);
+                }
+                else {
+                    Libro libro = new LibroDigital(id, titulo, autor, genero, anioPublicacion, estado, formato, enlace);
+                    try {
+                        biblioteca.registrarLibro(libro);
+                        listaLibros.add(libro);
+                        tblListLibros.setItems(listaLibros);
+                        controller.crearAlerta("Se ha agregado el libro digital correctamente", Alert.AlertType.INFORMATION);
+                        limpiarSeleccion();
+                    } catch (Exception e) {
+                        controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }
+            } else if (tipoLibro.equals(TipoLibro.REFERENCIA)) {
+                Libro libro = new LibroReferencia(id, titulo, autor, genero, anioPublicacion);
+                try {
+                    biblioteca.registrarLibro(libro);
+                    listaLibros.add(libro);
+                    tblListLibros.setItems(listaLibros);
+                    controller.crearAlerta("Se ha agregado el libro digital correctamente", Alert.AlertType.INFORMATION);
+                    limpiarSeleccion();
+                } catch (Exception e) {
+                    controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        }
     }
 
     @FXML
     void onEliminarlibro(ActionEvent event) {
-
+        Libro libros = tblListLibros.getSelectionModel().getSelectedItem();
+        if (libros == null){
+            controller.crearAlerta("Debe seleccionar un libro", Alert.AlertType.WARNING);
+        }
+        else {
+            listaLibros.remove(libros);
+            tblListLibros.setItems(listaLibros);
+            controller.crearAlerta("Se ha eliminado el libro correctamente", Alert.AlertType.INFORMATION);
+            limpiarSeleccion();
+            try{
+                biblioteca.eliminarLibro(libros.getID());
+            }
+            catch (Exception e){
+                controller.crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
     }
 
     @FXML
     void onPrestamosLibro(ActionEvent event) {
-
+        controller.navegarVentana(Prestamosbtn,"/org/example/proyectofx/PrestamoBibliotecario.fxml", "Prestamo Bibliotecario");
     }
 }
