@@ -20,6 +20,6 @@ public class InicioBibliotecarioController {
 
     @FXML
     void onOpenBibliotecarioUsuario(ActionEvent event) {
-        controller.navegarVentana(usuariosbtn,"/org/example/proyectofx/BibliotecarioLibro.fxml", "Bibliotecario Usuario");
+        controller.navegarVentana(usuariosbtn,"/org/example/proyectofx/BibliotecarioUsuario.fxml", "Bibliotecario Usuario");
     }
 }
